@@ -1,0 +1,22 @@
+{
+  "name": "ts-1-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/app.js",
+  "scripts": {
+    "babel:watch": "babel -w src --out-dir dist",
+    "nodemon": "nodemon ./dist/app.js",
+    "dev": "start npm run babel:watch && start npm run nodemon",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "nodemon": "^1.17.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0"
+  }
+}
