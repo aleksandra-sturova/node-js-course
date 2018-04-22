@@ -1,7 +1,7 @@
 import * as data from '../config/data.json';
-import * as models from './models';
+import  { User, Product } from './models';
 
 console.log(data.name);
 
-new models.User();
-new models.Product();
+new User();
+new Product();
