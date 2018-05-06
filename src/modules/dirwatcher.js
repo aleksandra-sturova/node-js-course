@@ -14,7 +14,7 @@ export class DirWatcher extends EventEmitter {
 
       if (currentFiles && currentFiles.length !== this.files.length) {
         const changedFiles = differenceWith(currentFiles, this.files, !isEqual);
-        console.log('emit dirwatcher:changed', changedFiles);
+        console.log('dirwatcher:changed', changedFiles);
         this.emit('dirwatcher:changed', changedFiles, path);
       }
 

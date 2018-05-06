@@ -1,13 +1,12 @@
 import fs from 'fs';
 import { promisify } from 'util';
-// import csv from 'csvtojson';
+import Papa from 'papaparse';
 
 const readFilePromise = promisify(fs.readFile);
 
 export class Importer {
   static listen(watcher) {
     watcher.on('dirwatcher:changed', (files, path) => {
-      console.log('Importer catched event', 'files', files, 'paths', path);
       if (files.length) {
         this.importAsync(files, path);
       }
@@ -15,21 +14,17 @@ export class Importer {
   }
 
   static importAsync(files, path) {
-    const readPromisesArr = files.map(file => readFilePromise(`${path}/${file}`));
+    const readPromisesArr = files.map(file => readFilePromise(`${path}/${file}`, 'utf8'));
     Promise.all(readPromisesArr)
       .then((filesData) => {
-        filesData.forEach((file) => {
-          console.log(file.toString());
-          /* implement data parsing and log to console */
-        });
+        filesData.forEach(file => console.log('Recieved async JSON', Papa.parse(file).data));
       });
   }
 
   static importSync(files, path) {
     files.forEach((file) => {
-      const fileData = fs.readFileSync(`${path}/${file}`);
-      console.log(fileData.toString());
-      /* implement data parsing and log to console */
+      const fileData = fs.readFileSync(`${path}/${file}`, 'utf8');
+      console.log('Recieved sync JSON', Papa.parse(fileData).data);
     });
   }
 }
