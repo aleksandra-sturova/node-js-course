@@ -1,32 +1,35 @@
 import fs from 'fs';
-/* Taken from http://2ality.com/2017/05/util-promisify.html */
 import { promisify } from 'util';
-/* Taken from and refactored a bit https://gist.github.com/iwek/7154578#file-csv-to-json-js */
-import cvsToJson from './cvs-to-json-converter';
+// import csv from 'csvtojson';
 
-const readPromise = promisify(fs.readFile);
+const readFilePromise = promisify(fs.readFile);
 
 export class Importer {
   static listen(watcher) {
-    return watcher.on('change', (path) => {
-      console.log('entered on change listener, path:', path);
-      this.importAsync(path);
+    watcher.on('dirwatcher:changed', (files, path) => {
+      console.log('Importer catched event', 'files', files, 'paths', path);
+      if (files.length) {
+        this.importAsync(files, path);
+      }
     });
   }
 
-  static importAsync(path) {
-    return readPromise(path)
-      .then((data) => {
-        const jsonData = cvsToJson(data);
-        console.log('Recieved Json Data ( async )', jsonData);
-        return jsonData;
-      })
-      .catch(err => console.log('An error occured while async reading: ', err));
+  static importAsync(files, path) {
+    const readPromisesArr = files.map(file => readFilePromise(`${path}/${file}`));
+    Promise.all(readPromisesArr)
+      .then((filesData) => {
+        filesData.forEach((file) => {
+          console.log(file.toString());
+          /* implement data parsing and log to console */
+        });
+      });
   }
 
-  static importSync(path) {
-    const jsonDatadata = cvsToJson(fs.readFile(path));
-    console.log('Recieved Json Data ( sync )', jsonData);
-    return jsonData;
+  static importSync(files, path) {
+    files.forEach((file) => {
+      const fileData = fs.readFileSync(`${path}/${file}`);
+      console.log(fileData.toString());
+      /* implement data parsing and log to console */
+    });
   }
 }

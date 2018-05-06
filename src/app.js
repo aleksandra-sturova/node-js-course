@@ -1,5 +1,5 @@
 import { DirWatcher, Importer } from './modules';
 
-
-const dirWatcher = DirWatcher.watch('../data');
+const dirWatcher = new DirWatcher();
+dirWatcher.watch(`${process.cwd()}/data`, 8000);
 Importer.listen(dirWatcher);
