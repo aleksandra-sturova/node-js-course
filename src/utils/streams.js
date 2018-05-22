@@ -4,6 +4,17 @@ import through from 'through2';
 import { parseArgumentOptions, printHelpMessage, resolveFilePath } from './helpers';
 
 /**
+ * Point 6.a: reverse string data from process.stdin to process.stdout
+ */
+function reverse() {
+  process.stdin
+    .pipe(through((buffer) => {
+      process.stdout.write(buffer.toString().split('').reverse().join(''));
+      process.exit(0);
+    }));
+}
+
+/**
  * Point 6.b: convert data from process.stdin to upper-cased data on process.stdout
  */
 function transform() {
@@ -11,7 +22,8 @@ function transform() {
     .pipe(through(function (buffer) {
       this.push(buffer.toString().toUpperCase());
       process.exit(0);
-    }));
+    }))
+    .pipe(process.stdout);
 }
 
 /**
@@ -33,7 +45,7 @@ function convert(file, saveJson = false) {
   const reader = fs.createReadStream(resolvedPath);
   const newFileName = `${file.slice(0, file.lastIndexOf('.'))}.json`;
   const logData = saveJson ? fs.createWriteStream(newFileName) : process.stdout;
-  const csvStream = csv.parse().on('data', data => logData.write(`${data.toString()}\n`));
+  const csvStream = csv.parse().on('data', data => logData.write(JSON.stringify(data)));
 
   reader.pipe(csvStream);
 }
@@ -60,6 +72,7 @@ function convertToFile({ file }) {
  */
 export function runAction(options) {
   const methods = {
+    reverse,
     transform,
     outputFile,
     convertFromFile,
