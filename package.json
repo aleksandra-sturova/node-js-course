@@ -1,0 +1,40 @@
+{
+  "name": "node-js-course",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/app.js",
+  "scripts": {
+    "lint:eslint": "eslint --fix --ext=.js ./src/",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "babel": "babel src --out-dir dist",
+    "babel:watch": "babel -w src --out-dir dist",
+    "nodemon": "nodemon ./dist/index.js",
+    "start": "start npm run babel:watch && start npm run nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sasha-klimashevich/node-js-course.git"
+  },
+  "author": "Aliaksandra Klimashevich",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sasha-klimashevich/node-js-course/issues"
+  },
+  "homepage": "https://github.com/sasha-klimashevich/node-js-course#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cookie-parser": "1.4.3",
+    "express": "4.16.3",
+    "nodemon": "1.17.3"
+  },
+  "devDependencies": {
+    "babel-cli": "6.26.0",
+    "babel-core": "6.26.0",
+    "babel-preset-env": "1.6.1",
+    "babel-preset-stage-2": "6.24.1",
+    "babel-register": "6.26.0",
+    "eslint": "4.19.1",
+    "eslint-config-airbnb-base": "12.1.0",
+    "eslint-plugin-import": "2.11.0"
+  }
+}
