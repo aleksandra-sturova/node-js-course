@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "df0cdf82-5c9a-4ece-ba5a-d3f21ccd2702",
-		"name": "Node Js. Task 4: Middleware. Frameworks",
+		"name": "Node Js. Tasks 4 - 5",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -10,7 +10,7 @@
 			"description": "",
 			"item": [
 				{
-					"name": "/api/products",
+					"name": "/api/v1/products",
 					"event": [
 						{
 							"listen": "test",
@@ -33,7 +33,12 @@
 					],
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{token}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    id: 1,\r\n    name: 'Supreme T-Shirt',\r\n    brand: 'Supreme',\r\n    price: 99.99,\r\n    options: [\r\n      { color: 'blue' },\r\n      { size: 'XL' }\r\n    ],\r\n    reviews: [\r\n      {\r\n        id: '1.1',\r\n        message: 'cool color'\r\n      },\r\n    ]\r\n  }"
@@ -55,7 +60,7 @@
 					"response": []
 				},
 				{
-					"name": "api/products:id",
+					"name": "api/v1/products:id",
 					"event": [
 						{
 							"listen": "test",
@@ -78,7 +83,12 @@
 					],
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{token}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "localhost:8080/api/v1/products/2",
@@ -97,7 +107,7 @@
 					"response": []
 				},
 				{
-					"name": "api/products:id - not existing id",
+					"name": "api/v1/products:id - not existing id",
 					"event": [
 						{
 							"listen": "test",
@@ -120,7 +130,12 @@
 					],
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{token}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "localhost:8080/api/v1/products/not_id",
@@ -139,7 +154,7 @@
 					"response": []
 				},
 				{
-					"name": "api/products:id/reviews",
+					"name": "api/v1/products:id/reviews",
 					"event": [
 						{
 							"listen": "test",
@@ -162,7 +177,12 @@
 					],
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{token}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "http://localhost:8080/api/v1/products/1/reviews",
@@ -183,7 +203,7 @@
 					"response": []
 				},
 				{
-					"name": "api/products - post",
+					"name": "api/v1/products - post",
 					"event": [
 						{
 							"listen": "test",
@@ -215,6 +235,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{token}}"
 							}
 						],
 						"body": {
@@ -239,7 +263,7 @@
 					"response": []
 				},
 				{
-					"name": "api/products - post , empty body",
+					"name": "api/v1/products - post , empty body",
 					"event": [
 						{
 							"listen": "test",
@@ -260,7 +284,12 @@
 					],
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{token}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -289,25 +318,17 @@
 			"description": "",
 			"item": [
 				{
-					"name": "/api/users",
+					"name": "/api/v1/users",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "d5eba345-06fa-4269-9e88-8ff991dc80ac",
+								"id": "559a2613-b99f-473f-8fdf-50115deb1839",
 								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});",
-									"",
-									"",
-									"let usersRespons = pm.variables.get(\"users_response\");",
-									"",
-									"pm.test(\"Should return all users\", function () {",
-									"    pm.expect(pm.response.text()).to.include(usersRespons);",
-									"});",
-									"",
 									"",
 									"pm.test(\"Should return json array of two users\", function () {",
 									"    var jsonData = pm.response.json();",
@@ -321,7 +342,12 @@
 					],
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{token}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    id: 1,\r\n    name: 'Supreme T-Shirt',\r\n    brand: 'Supreme',\r\n    price: 99.99,\r\n    options: [\r\n      { color: 'blue' },\r\n      { size: 'XL' }\r\n    ],\r\n    reviews: [\r\n      {\r\n        id: '1.1',\r\n        message: 'cool color'\r\n      },\r\n    ]\r\n  }"
@@ -337,6 +363,209 @@
 								"api",
 								"v1",
 								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"description": "",
+			"item": [
+				{
+					"name": "/auth",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "17bad5a1-01ab-4975-a203-01b490423279",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"",
+									"pm.test(\"Should return user data\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.data.user.email).to.eql('jim_morrison@mail.com');",
+									"    pm.expect(jsonData.data.user.name).to.eql('Jim');",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"token\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"userName\": \"jim_morrison\",\r\n\t\"password\": \"12345a\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/auth/local",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "17c1ee38-973f-467c-b6de-55ad110757da",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"",
+									"pm.test(\"Should return user data\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.email).to.eql('jim_morrison@mail.com');",
+									"    pm.expect(jsonData.name).to.eql('jim_morrison');",
+									"     pm.expect(jsonData.provider).to.eql('local');",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"username\": \"jim_morrison\",\r\n\t\"password\": \"12345a\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/local",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"local"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/auth/local - wrong credentials",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "65c33265-ca10-49c2-8ac7-0736120cadcc",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"",
+									"",
+									"",
+									"pm.test(\"Body is correct\", function () {",
+									"    pm.response.to.have.body(\"Unathorized: Bad credentials\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"username\": \"jim_morrison\",\r\n\t\"password\": \"1111111\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/local",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"local"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/auth - wrong credentials",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "11618b85-e464-49f9-b6ed-30aa5f9eeb40",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Should return message 'Not Found' \", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"Not Found\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userName\": \"jim_morrison\",\n\t\"password\": \"1111111\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth"
 							]
 						}
 					},
@@ -369,9 +598,9 @@
 	],
 	"variable": [
 		{
-			"id": "63cacc1e-f47c-411b-993a-51030b5b5cac",
-			"key": "users_response",
-			"value": "[{\"id\":1,\"name\":\"Lucy\"},{\"id\":2,\"name\":\"Jim_23\"}]",
+			"id": "7e20ef7e-e8a4-42e2-842d-9291dc4d6398",
+			"key": "token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImppbV9tb3JyaXNvbiIsImlhdCI6MTUyOTQzNjU3NywiZXhwIjoxNTI5NDM2NjA3fQ.L92v3WtZTAkOmEBJLTHfsn8v8gutXpz5UK2yyjivrQk",
 			"type": "string",
 			"description": ""
 		}
