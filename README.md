@@ -19,3 +19,5 @@ npm start
 ```
 
 use Postman and "Node Js. Task 4- Middleware. Frameworks.postman_collection.json"
+
+NOTE: generate token using "/auth" and add it's value to colletions variable.Then you can run collection.

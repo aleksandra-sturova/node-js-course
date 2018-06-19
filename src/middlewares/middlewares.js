@@ -1,3 +1,5 @@
+import jwt from 'jsonwebtoken';
+
 /* 6 Middleware for cookie parsing  */
 export function setCoockies() {
   return function (req, res, next) {
@@ -29,3 +31,21 @@ export function queryParser() {
     next();
   }
 }
+
+/* middleware to verify JWT token */
+export function checkToken(req, res, next) {
+  const token = req.headers['x-access-token'];
+
+  if (token) {
+    jwt.verify(token, 'secret13', (err) => {
+      if (err) {
+        return res.status(401).json({ message: 'Unathorized: Invalid authorization token' });
+      }
+
+      next();
+    });
+  } else {
+    res.status(401).send({ message: 'Unathorized: No token provided' });
+  }
+}
+
