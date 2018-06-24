@@ -1,3 +1,23 @@
 {
-  "secretWord": "secret13"
+  "development": {
+    "username": "postgres",
+    "password": "yourPassword",
+    "database": "myDB",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "local-postgress-1.0",
+    "password": "yourPassword",
+    "database": "myDB",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "local-postgress-1.0",
+    "password": "yourPassword",
+    "database": "myDB",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
 }
