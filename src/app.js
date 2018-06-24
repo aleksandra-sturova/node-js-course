@@ -1,11 +1,15 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
+import morgan from 'morgan';
 import routes from './routes';
 import { passport } from './config/passport';
 import { queryParser, setCoockies, checkToken } from './middlewares/middlewares';
 
 const app = express();
+
+morgan.token('id', req => req.id);
+app.use(morgan('combined'));
 
 app.use(queryParser());
 app.use(cookieParser(), setCoockies());

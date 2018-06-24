@@ -1,6 +1,6 @@
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
-import { users } from '../models/users';
+import users from '../mock-data/users';
 
 passport.use(new LocalStrategy((username, password, done) => {
   const user = users.find(userData =>

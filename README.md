@@ -1,20 +1,18 @@
 # node-js-course
 
-## To check the first subtask run in console 
-```
-npm run babel
-
-open http://localhost:8080/
-
-node ./dist/http-servers/json-server.js
-node ./dist/http-servers/html-server.js
-node ./dist/http-servers/echo-server.js and trigger POST request (use Postman for example)
-node ./dist/http-servers/plain-text-server.js
-```
-
-## To check the second subtask run in console 
+## Run in console
 
 ```
+cd src
+
+npm run babel (to create dist, also containing copied config)
+
+../node_modules/.bin/sequelize db:create
+
+../node_modules/.bin/sequelize db:migrate
+
+../node_modules/.bin/sequelize db:seed:all
+
 npm start
 ```
 
