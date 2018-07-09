@@ -3,19 +3,15 @@
 ## Run in console
 
 ```
-cd src
+run mongod on your machine
 
-npm run babel (to create dist, also containing copied config)
-
-../node_modules/.bin/sequelize db:create
-
-../node_modules/.bin/sequelize db:migrate
-
-../node_modules/.bin/sequelize db:seed:all
+mongoimport --jsonArray --db mydb --collection users --file ./src/mock-data/users.json
+mongoimport --jsonArray --db mydb --collection products --file ./src/mock-data/products.json
+mongoimport --jsonArray --db mydb --collection cities --file ./src/mock-data/cities.json
 
 npm start
 ```
 
-use Postman and "Node Js. Task 4- Middleware. Frameworks.postman_collection.json"
+use Postman and "Node Js. Task 7 - Middleware. Frameworks.postman_collection.json"
 
-NOTE: generate token using "/auth" and add it's value to colletions variable.Then you can run collection.
+NOTE: generate token using "/auth" and add it's value to colletions variable. Then you can run collection.

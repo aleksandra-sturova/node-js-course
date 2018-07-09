@@ -65,7 +65,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a278ef26-e425-4499-928a-83d58302c32f",
+								"id": "56f9095c-b074-46e0-a81e-2e4dca5180a9",
 								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
@@ -76,7 +76,7 @@
 									"pm.test(\"Should return product by id\", function () {",
 									"    var jsonData = pm.response.json();",
 									"    console.log(jsonData)",
-									"    pm.expect(jsonData.id).to.eql(1);",
+									"    pm.expect(jsonData.id).to.eql('1');",
 									"});"
 								]
 							}
@@ -102,6 +102,57 @@
 								"v1",
 								"products",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/v1/products:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "56f9095c-b074-46e0-a81e-2e4dca5180a9",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Should return product by id\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    console.log(jsonData)",
+									"    pm.expect(jsonData.id).to.eql('1');",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": \"1\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/products/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								""
 							]
 						}
 					},
@@ -259,6 +310,60 @@
 					"response": []
 				},
 				{
+					"name": "api/v1/products - existing product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "22df27ea-5cbc-4113-a219-f83fe5385ceb",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Body is correct\", function () {",
+									"    pm.response.to.have.body('Product already exists');",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"id\": \"1\",\r\n    \"name\":\"Supreme T-Shirt\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/products/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "api/v1/products - post , empty body",
 					"event": [
 						{
@@ -306,6 +411,139 @@
 						}
 					},
 					"response": []
+				}
+			]
+		},
+		{
+			"name": "cities",
+			"description": "",
+			"item": [
+				{
+					"name": "/api/v1/cities",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fef18251-41d8-40bf-9918-0976e84913d5",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Should return array of products\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData instanceof Array).to.eql(true);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    id: 1,\r\n    name: 'Supreme T-Shirt',\r\n    brand: 'Supreme',\r\n    price: 99.99,\r\n    options: [\r\n      { color: 'blue' },\r\n      { size: 'XL' }\r\n    ],\r\n    reviews: [\r\n      {\r\n        id: '1.1',\r\n        message: 'cool color'\r\n      },\r\n    ]\r\n  }"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/v1/cities - post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "674f1537-77e9-4e6f-953a-74807b97850b",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Should add item to products\", function () {",
+									"    let jsonData = pm.response.json();",
+									"    pm.expect(jsonData.name).to.eql('Baranovichi');",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"id\": 4,\r\n    \"name\": \"Baranovichi\",\r\n    \"country\": \"Belarus\",\r\n    \"capital\": false,\r\n    \"location\": {\r\n      \"lat\": 55.097621,\r\n      \"long\": 25.734050\r\n    }\r\n  }"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/cities/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"cities",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "0ae1f451-4dbf-4d4a-94a8-6e0e2dbae635",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "7b889158-4a41-4baa-b09b-16295c789207",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		},
@@ -493,7 +731,7 @@
 	],
 	"variable": [
 		{
-			"id": "e2b97d00-644c-47f0-b47b-3a9863268ff8",
+			"id": "87206943-a735-461d-994a-73533819ac4a",
 			"key": "token",
 			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImppbV9tb3JyaXNvbiIsImlhdCI6MTUyOTg2NTI0NCwiZXhwIjoxNTI5ODc1MjQ0fQ.BxJ34SRsl6TKIR6LHva4276uEU7lhGKtO54MviBrczc",
 			"type": "string",

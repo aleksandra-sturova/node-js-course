@@ -1,10 +1,10 @@
 import jwt from 'jsonwebtoken';
-import { User } from '../models';
+import User from '../models/user';
 
 export function authWithToken(req, res, next) {
   const { userName, password } = req.body;
 
-  User.findAll({ where: { userName, password } })
+  User.find({ userName, password })
     .then((data) => {
       const currentUserData = data[0];
       const allowAccess = currentUserData && currentUserData.password === password;

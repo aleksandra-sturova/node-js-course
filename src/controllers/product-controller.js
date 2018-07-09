@@ -1,47 +1,61 @@
-import { Product } from '../models';
+import Product from '../models/product';
 
-/* 8.1 Return ALL products */
+/* Return ALL products */
 export function getAllProducts(req, res) {
-  Product.findAll()
+  Product.find({})
     .then((products) => {
       return products && products.length
-        ? res.send(JSON.stringify(products))
+        ? res.send(products)
         : res.status(404).send(JSON.stringify([]));
     });
 }
 
-/* 8.2 Return SINGLE product */
+/* Return SINGLE product */
 export function getProductById(req, res) {
   const { id = '' } = req.params;
-  Product.findAll({ where: { id } }).then((productById) => {
-    return productById && productById[0]
-      ? res.send(JSON.stringify(productById[0]))
+
+  Product.findOne({ id }).then((productById) => {
+    return productById
+      ? res.send(productById)
       : res.status(404).send(JSON.stringify({}));
   });
 }
 
-/* 8.3 Return ALL reviews for a single product */
+/* Return ALL reviews for a single product */
 export function getSingleProductReviews(req, res) {
   const { id = '' } = req.params;
 
-  Product.findAll({ where: { id } }).then((productById) => {
-    const reviews = productById ? productById[0].reviews : null;
+  Product.findOne({ id }).then((productById) => {
+    const reviews = productById ? productById.reviews : null;
     return productById
       ? res.send(reviews)
       : res.status(404).send(JSON.stringify({}));
   });
 }
 
-/* 8.4 Add NEW product and return it */
+/* Add NEW product and return it */
 export function addNewProduct(req, res) {
   const newProduct = req.body;
   const isEmpty = !Object.keys(newProduct).length;
+
   if (isEmpty) {
     res.status(400).send('Bad request: body can not be empty');
   } else {
-    Product.create(newProduct)
-      .then((result) => {
-        res.status(201).send(result.dataValues);
+    Product.findOne({ id: newProduct.id })
+      .then((productById) => {
+        if (productById) {
+          res.status(400).send('Product already exists');
+        } else {
+          Product.create(newProduct)
+            .then(result => (res.status(201).send(result)));
+        }
       });
   }
+}
+
+/* Delete product by id */
+/**  FINISH later */
+export function deleteProductById(req, res) {
+  const { id } = req.params;
+  Product.findOneAndDelete({ id });
 }

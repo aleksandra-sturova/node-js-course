@@ -8,6 +8,7 @@ import {
 const productsRouter = express.Router();
 
 productsRouter.get('/', getAllProducts);
+productsRouter.delete('/', getAllProducts);
 productsRouter.get('/:id', getProductById);
 productsRouter.get('/:id/reviews', getSingleProductReviews);
 productsRouter.post('/', addNewProduct);
