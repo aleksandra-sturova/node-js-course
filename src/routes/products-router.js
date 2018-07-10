@@ -3,11 +3,14 @@ import {
   getAllProducts,
   getProductById,
   getSingleProductReviews,
-  addNewProduct } from '../controllers/product-controller';
+  addNewProduct,
+  deleteProductById,
+} from '../controllers/product-controller';
 
 const productsRouter = express.Router();
 
 productsRouter.get('/', getAllProducts);
+productsRouter.delete('/', deleteProductById);
 productsRouter.get('/:id', getProductById);
 productsRouter.get('/:id/reviews', getSingleProductReviews);
 productsRouter.post('/', addNewProduct);

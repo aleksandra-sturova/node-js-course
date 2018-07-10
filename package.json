@@ -6,7 +6,7 @@
   "scripts": {
     "lint:eslint": "eslint --fix --ext=.js ./src/",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "babel": "babel src --out-dir dist",
+    "babel": "babel src --out-dir dist --copy-files",
     "babel:watch": "babel -w src --out-dir dist",
     "nodemon": "nodemon ./dist/index.js",
     "start": "start npm run babel:watch && start npm run nodemon"
@@ -22,10 +22,14 @@
   },
   "homepage": "https://github.com/sasha-klimashevich/node-js-course#readme",
   "dependencies": {
-    "body-parser": "^1.18.3",
     "cookie-parser": "1.4.3",
     "express": "4.16.3",
-    "nodemon": "1.17.3"
+    "jsonwebtoken": "8.3.0",
+    "mongoose": "5.2.1",
+    "morgan": "1.9.0",
+    "nodemon": "1.17.3",
+    "passport": "0.4.0",
+    "passport-local": "1.0.0"
   },
   "devDependencies": {
     "babel-cli": "6.26.0",

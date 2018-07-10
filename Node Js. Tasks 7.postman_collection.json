@@ -1,0 +1,801 @@
+{
+	"info": {
+		"_postman_id": "df0cdf82-5c9a-4ece-ba5a-d3f21ccd2702",
+		"name": "Node Js. Tasks 7",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "products",
+			"description": "",
+			"item": [
+				{
+					"name": "/api/v1/products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fef18251-41d8-40bf-9918-0976e84913d5",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Should return array of products\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData instanceof Array).to.eql(true);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    id: 1,\r\n    name: 'Supreme T-Shirt',\r\n    brand: 'Supreme',\r\n    price: 99.99,\r\n    options: [\r\n      { color: 'blue' },\r\n      { size: 'XL' }\r\n    ],\r\n    reviews: [\r\n      {\r\n        id: '1.1',\r\n        message: 'cool color'\r\n      },\r\n    ]\r\n  }"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/v1/products:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fb6fd2ec-ee22-4f6e-a134-b1bb64a38940",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Should return product by id\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    console.log(jsonData)",
+									"    pm.expect(jsonData.id).to.eql('2');",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/v1/products/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/v1/products - delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "99f08839-3ea1-41b4-97d2-73e5c8bde52e",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Product with id 1 was successfully removed\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"1\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/products",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/v1/products:id - not existing id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a73318f3-f30a-4574-8155-cea86f2e9313",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Should return product by id\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.eql({});",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/v1/products/35",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"35"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/v1/products/:id/reviews",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "efe3e76a-fe75-483f-865c-a40fad262311",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"message\");",
+									"      pm.expect(pm.response.text()).to.include(\"id\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/products/2/reviews",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"2",
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/v1/products - post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c0dcbfa0-30fb-485e-8708-b3ee1069f0c2",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Should add item to products\", function () {",
+									"    let jsonData = pm.response.json();",
+									"    pm.expect(jsonData.name).to.eql('Adidas T-Shirt');",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"id\": \"3\",\r\n    \"name\": \"Adidas T-Shirt\",\r\n    \"price\": 100.91,\r\n    \"reviews\": [{\"id\":\"3.2\",\"message\":\"Cool!\"}]\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/products/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"description": "",
+			"item": [
+				{
+					"name": "/api/v1/users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "559a2613-b99f-473f-8fdf-50115deb1839",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Should return json array of two users\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData instanceof Array).to.eql(true);",
+									"    pm.expect(jsonData.length).to.eql(2);",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    id: 1,\r\n    name: 'Supreme T-Shirt',\r\n    brand: 'Supreme',\r\n    price: 99.99,\r\n    options: [\r\n      { color: 'blue' },\r\n      { size: 'XL' }\r\n    ],\r\n    reviews: [\r\n      {\r\n        id: '1.1',\r\n        message: 'cool color'\r\n      },\r\n    ]\r\n  }"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/users - delete ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "976c41a0-73a8-4a09-a735-452f932d97fa",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"User with id 1 was successfully removed\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": \"1\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"description": "",
+			"item": [
+				{
+					"name": "/auth",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "17bad5a1-01ab-4975-a203-01b490423279",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"",
+									"pm.test(\"Should return user data\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.data.user.email).to.eql('jim_morrison@mail.com');",
+									"    pm.expect(jsonData.data.user.name).to.eql('Jim');",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"token\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userName\": \"jim_morrison\",\r\n  \"password\": \"12345a\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/auth - wrong credentials",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "11618b85-e464-49f9-b6ed-30aa5f9eeb40",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Should return message 'Not Found' \", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"Not Found\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userName\": \"jim_morrison\",\n  \"password\": \"1111111\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "cities",
+			"description": "",
+			"item": [
+				{
+					"name": "/api/v1/cities",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3ff31a6d-5d26-4c6a-ad0f-aaa601c040a5",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Should return array of cities\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData instanceof Array).to.eql(true);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"country\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    id: 1,\r\n    name: 'Supreme T-Shirt',\r\n    brand: 'Supreme',\r\n    price: 99.99,\r\n    options: [\r\n      { color: 'blue' },\r\n      { size: 'XL' }\r\n    ],\r\n    reviews: [\r\n      {\r\n        id: '1.1',\r\n        message: 'cool color'\r\n      },\r\n    ]\r\n  }"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/cities",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"cities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/cities - delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "90fe8fa4-0428-4b8f-ab53-4437085897c8",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"City with id 1 was successfully removed\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"1\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/cities",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"cities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/cities - update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cc53e498-936a-47b4-865a-c369926d4af8",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"City Minsk was successfully updated\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\":\"2\",\r\n  \"location\":{ \r\n\t\"lat\":45.097621,\r\n\t\"long\":25.73405\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/cities",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"cities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/v1/cities - post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "674f1537-77e9-4e6f-953a-74807b97850b",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Should add item to products\", function () {",
+									"    let jsonData = pm.response.json();",
+									"    pm.expect(jsonData.name).to.eql('Baranovichi');",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 4,\r\n    \"name\": \"Baranovichi\",\r\n    \"country\": \"Belarus\",\r\n    \"capital\": false,\r\n    \"location\": {\r\n      \"lat\": 55.097621,\r\n      \"long\": 25.734050\r\n    }\r\n  }"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/cities",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"cities"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "0ae1f451-4dbf-4d4a-94a8-6e0e2dbae635",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "7b889158-4a41-4baa-b09b-16295c789207",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "239d1671-5012-47c7-a156-68d70dfb0340",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "4f4bb8dd-951a-4ef9-87db-3177a2dd0714",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "4cdc8c47-5df7-407c-806b-fd5beb4b27f5",
+			"key": "token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImppbV9tb3JyaXNvbiIsImlhdCI6MTUyOTg2NTI0NCwiZXhwIjoxNTI5ODc1MjQ0fQ.BxJ34SRsl6TKIR6LHva4276uEU7lhGKtO54MviBrczc",
+			"type": "string",
+			"description": ""
+		}
+	]
+}

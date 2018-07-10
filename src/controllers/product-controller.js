@@ -1,33 +1,38 @@
-import { products } from '../models/products';
+import Product from '../models/product';
 
-/* 8.1 Return ALL products */
+/* Return ALL products */
 export function getAllProducts(req, res) {
-  return products && products.length
-    ? res.send(JSON.stringify(products))
-    : res.status(404).send(JSON.stringify([]));
+  Product.find({})
+    .then((products) => {
+      return products && products.length
+        ? res.send(products)
+        : res.status(404).send(JSON.stringify([]));
+    });
 }
 
-/* 8.2 Return SINGLE product */
+/* Return SINGLE product */
 export function getProductById(req, res) {
   const { id = '' } = req.params;
-  const productById = products.find(elem => elem.id == id);
-  return productById
-    ? res.send(JSON.stringify(productById))
-    : res.status(404).send(JSON.stringify({}));
+  Product.findOne({ id }).then((productById) => {
+    return productById
+      ? res.send(productById)
+      : res.status(404).send(JSON.stringify({}));
+  });
 }
 
-/* 8.3 Return ALL reviews for a single product */
+/* Return ALL reviews for a single product */
 export function getSingleProductReviews(req, res) {
   const { id = '' } = req.params;
-  const productById = products.find(elem => elem.id == id);
-  const reviews = productById ? productById.reviews : null;
 
-  return reviews
-    ? res.send(JSON.stringify(reviews))
-    : res.status(404).send(JSON.stringify({}));
+  Product.findOne({ id }).then((productById) => {
+    const reviews = productById ? productById.reviews : null;
+    return productById
+      ? res.send(reviews)
+      : res.status(404).send(JSON.stringify({}));
+  });
 }
 
-/* 8.4 Add NEW product and return it */
+/* Add NEW product and return it */
 export function addNewProduct(req, res) {
   const newProduct = req.body;
   const isEmpty = !Object.keys(newProduct).length;
@@ -35,7 +40,31 @@ export function addNewProduct(req, res) {
   if (isEmpty) {
     res.status(400).send('Bad request: body can not be empty');
   } else {
-    products.push(newProduct);
-    res.status(201).send(products);
+    Product.findOne({ id: newProduct.id })
+      .then((productById) => {
+        if (productById) {
+          res.status(400).send('Product already exists');
+        } else {
+          Product.create(newProduct)
+            .then(result => (res.status(201).send(result)));
+        }
+      });
   }
 }
+
+/* Delete product by id */
+export function deleteProductById(req, res) {
+  const { id } = req.body;
+
+  Product.findOneAndRemove({ id }, (err, product) => {
+    if (!product) {
+      res.status(400).send({ message: 'Product not found' });
+    } else {
+      res.status(200).send({ message: `Product with id ${product.id} was successfully removed` });
+    }
+    if (err) {
+      res.status(500).send({ message: 'An error occurred while deleting product' });
+    }
+  });
+}
+

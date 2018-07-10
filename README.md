@@ -1,21 +1,26 @@
 # node-js-course
 
-## To check the first subtask run in console 
+## Check random city server
 ```
 npm run babel
+node dist/http-servers/random-city-server.js
 
 open http://localhost:8080/
 
-node ./dist/http-servers/json-server.js
-node ./dist/http-servers/html-server.js
-node ./dist/http-servers/echo-server.js and trigger POST request (use Postman for example)
-node ./dist/http-servers/plain-text-server.js
 ```
 
-## To check the second subtask run in console 
+## Run in console
 
 ```
+run mongod on your machine
+
+mongoimport --jsonArray --db mydb --collection users --file ./src/mock-data/users.json
+mongoimport --jsonArray --db mydb --collection products --file ./src/mock-data/products.json
+mongoimport --jsonArray --db mydb --collection cities --file ./src/mock-data/cities.json
+
 npm start
 ```
 
-use Postman and "Node Js. Task 4- Middleware. Frameworks.postman_collection.json"
+use Postman and "Node Js. Task 7 - Middleware. Frameworks.postman_collection.json"
+
+NOTE: generate token using "/auth" and add it's value to colletions variable. Then you can run collection.
