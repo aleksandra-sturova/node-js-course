@@ -13,7 +13,6 @@ export function getAllProducts(req, res) {
 /* Return SINGLE product */
 export function getProductById(req, res) {
   const { id = '' } = req.params;
-
   Product.findOne({ id }).then((productById) => {
     return productById
       ? res.send(productById)
@@ -54,8 +53,18 @@ export function addNewProduct(req, res) {
 }
 
 /* Delete product by id */
-/**  FINISH later */
 export function deleteProductById(req, res) {
-  const { id } = req.params;
-  Product.findOneAndDelete({ id });
+  const { id } = req.body;
+
+  Product.findOneAndRemove({ id }, (err, product) => {
+    if (!product) {
+      res.status(400).send({ message: 'Product not found' });
+    } else {
+      res.status(200).send({ message: `Product with id ${product.id} was successfully removed` });
+    }
+    if (err) {
+      res.status(500).send({ message: 'An error occurred while deleting product' });
+    }
+  });
 }
+

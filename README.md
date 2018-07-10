@@ -1,5 +1,14 @@
 # node-js-course
 
+## Check random city server
+```
+npm run babel
+node dist/http-servers/random-city-server.js
+
+open http://localhost:8080/
+
+```
+
 ## Run in console
 
 ```

@@ -10,7 +10,7 @@ const citiesRouter = express.Router();
 
 citiesRouter.get('/', getAllCities);
 citiesRouter.post('/', addNewCity);
-// citiesRouter.delete('/:id', deleteCityById);
-// citiesRouter.put('/:id', updateCityById);
+citiesRouter.delete('/', deleteCityById);
+citiesRouter.put('/', updateCityById);
 
 export default citiesRouter;

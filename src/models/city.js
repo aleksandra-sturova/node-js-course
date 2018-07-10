@@ -1,6 +1,10 @@
 import mongoose from 'mongoose';
 
 const citySchema = mongoose.Schema({
+  id: {
+    type: String,
+    required: true,
+  },
   name: {
     type: String,
     required: true,
@@ -24,4 +28,4 @@ const citySchema = mongoose.Schema({
   },
 });
 
-export default mongoose.model('Cities', citySchema);
+export default mongoose.model('City', citySchema);

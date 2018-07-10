@@ -17,7 +17,7 @@ app.use(morgan('combined'));
 app.use(queryParser());
 app.use(cookieParser(), setCoockies());
 
-//app.use(express.urlencoded({ extenred: true }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use(passport.initialize());

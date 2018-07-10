@@ -31,9 +31,40 @@ export function addNewCity(req, res) {
 }
 
 /* Delete city by id */
-/**  FINISH later */
-export function deleteCityById(req, res) {}
+export function deleteCityById(req, res) {
+  const { id } = req.body;
+
+  City.findOneAndRemove({ id }, (err, city) => {
+    if (!city) {
+      res.status(400).send({ message: 'City not found' });
+    } else {
+      res.status(200).send({ message: `City with id ${city.id} was successfully removed` });
+    }
+    if (err) {
+      res.status(500).send({ message: 'An error occurred while deleting city' });
+    }
+  });
+}
 
 /* Update city by id */
-/**  FINISH later */
-export function updateCityById(req, res) {}
+export function updateCityById(req, res) {
+  const { id, location } = req.body;
+  const update = {
+    location: {
+      lat: location.lat,
+      long: location.long,
+    },
+  };
+
+  City.findOneAndUpdate({ id }, update, { new: true }, (err, city) => {
+    console.log('!!!!!!!', city);
+    if (!city) {
+      res.status(400).send({ message: 'City not found' });
+    } else {
+      return res.status(200).send({ message: `City ${city.name} was successfully updated` });
+    }
+    if (err) {
+      res.status(500).send({ message: 'An error occurred while deleting city' });
+    }
+  });
+}
