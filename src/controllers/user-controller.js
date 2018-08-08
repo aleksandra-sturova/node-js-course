@@ -12,7 +12,7 @@ export function getAllUsers(req, res) {
 
 /* Delete product by id */
 export function deleteUserById(req, res) {
-  const { id } = req.body;
+  const { id } = req.params;
 
   User.findOneAndRemove({ id }, (err, user) => {
     if (!user) {

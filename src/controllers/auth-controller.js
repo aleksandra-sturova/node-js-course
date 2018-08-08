@@ -4,10 +4,10 @@ import User from '../models/user';
 export function authWithToken(req, res, next) {
   const { userName, password } = req.body;
 
-  User.find({ userName, password })
+  User.findOne({ userName })
     .then((data) => {
-      const currentUserData = data[0];
-      const allowAccess = currentUserData && currentUserData.password === password;
+      console.log('data', data);
+      const allowAccess = data && data.password === password;
 
       if (allowAccess) {
         const token = jwt.sign({ userName }, 'secret13', { expiresIn: 10000 });
@@ -15,8 +15,8 @@ export function authWithToken(req, res, next) {
         res.status(200).send({
           data: {
             user: {
-              email: currentUserData.email,
-              name: currentUserData.name,
+              email: data.email,
+              name: data.name,
             },
           },
           token,

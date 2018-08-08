@@ -21,7 +21,7 @@ export function addNewCity(req, res) {
     City.findOne({ id: newProduct.id })
       .then((productById) => {
         if (productById) {
-          res.status(400).send('Product already exists');
+          res.status(400).send('City already exists');
         } else {
           City.create(newProduct)
             .then(result => (res.status(201).send(result)));
@@ -32,7 +32,7 @@ export function addNewCity(req, res) {
 
 /* Delete city by id */
 export function deleteCityById(req, res) {
-  const { id } = req.body;
+  const { id } = req.params;
 
   City.findOneAndRemove({ id }, (err, city) => {
     if (!city) {

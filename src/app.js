@@ -2,14 +2,18 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
+import SwaggerUI from 'swagger-ui-express';
 import routes from './routes';
 import { passport } from './config/passport';
 import { queryParser, setCoockies, checkToken } from './middlewares/middlewares';
+import * as swaggerDoc from '../swagger.json';
 
 mongoose.connect('mongodb://localhost:27017/mydb', { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 
 const app = express();
+
+app.use('/node-js-api/docs', SwaggerUI.serve, SwaggerUI.setup(swaggerDoc));
 
 morgan.token('id', req => req.id);
 app.use(morgan('combined'));
