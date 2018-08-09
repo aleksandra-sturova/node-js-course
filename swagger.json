@@ -1,0 +1,605 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "Mentoring Node.js program rest api.",
+    "version" : "1.0.0",
+    "title" : "Node JS mentoting program - hw 8",
+    "termsOfService" : "http://swagger.io/terms/",
+    "contact" : {
+      "email" : "aleksandra.klimashevich@gmail.com"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host" : "localhost:8080",
+  "tags" : [ {
+    "name" : "products",
+    "description" : "Operations with products"
+  }, {
+    "name" : "users",
+    "description" : "Operations with users"
+  }, {
+    "name" : "cities",
+    "description" : "Operations with cities"
+  }, {
+    "name" : "products",
+    "description" : "Operations with authentication"
+  } ],
+  "schemes" : [ "http" ],
+  "paths" : {
+    "/api/v1/products" : {
+      "get" : {
+        "tags" : [ "products" ],
+        "summary" : "Get all products.",
+        "description" : "Get all of the products. Only for authorized users.",
+        "operationId" : "getAllProducts",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Product"
+              }
+            }
+          },
+          "404" : {
+            "description" : "Unauthorized access"
+          },
+          "500" : {
+            "description" : "Internal server error"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "products" ],
+        "summary" : "Add a new product.",
+        "description" : "Add new product. Only for authorized users",
+        "operationId" : "addNewProduct",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "New product data object.",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/Product"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Success"
+          },
+          "404" : {
+            "description" : "Unauthorized access"
+          },
+          "500" : {
+            "description" : "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/products/{id}" : {
+      "get" : {
+        "tags" : [ "products" ],
+        "summary" : "Get single product by id.",
+        "description" : "Get product by provided id. Only for authorized users.",
+        "operationId" : "getProductById",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Product ID.",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "$ref" : "#/definitions/Product"
+            }
+          },
+          "404" : {
+            "description" : "Unauthorized access"
+          },
+          "500" : {
+            "description" : "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/products/{id}/reviews" : {
+      "get" : {
+        "tags" : [ "products" ],
+        "summary" : "Get reviews of a single product.",
+        "description" : "Get reviews of a single product by id. Only for authorized users.",
+        "operationId" : "getSingleProductReviews",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Product ID.",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Review"
+              }
+            }
+          },
+          "404" : {
+            "description" : "Unauthorized access"
+          },
+          "500" : {
+            "description" : "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/users" : {
+      "get" : {
+        "tags" : [ "users" ],
+        "summary" : "Get all users.",
+        "description" : "Get all users. Only for authorized users.",
+        "operationId" : "getAllUsers",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/User"
+              }
+            }
+          },
+          "404" : {
+            "description" : "Unauthorized access"
+          },
+          "500" : {
+            "description" : "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/users/{id}" : {
+      "delete" : {
+        "tags" : [ "users" ],
+        "summary" : "Delete user by id.",
+        "description" : "delete user by provided id. Only for authorized users.",
+        "operationId" : "deleteUserById",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Id of a user to remove.",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "message" : {
+                  "type" : "string",
+                  "example" : "User with id 1 was successfully removed"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Unauthorized access"
+          },
+          "500" : {
+            "description" : "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/cities" : {
+      "get" : {
+        "tags" : [ "cities" ],
+        "summary" : "Get all the cities",
+        "description" : "Get all of the cities. Only for authorized users.",
+        "operationId" : "getAllCities",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/City"
+              }
+            }
+          },
+          "404" : {
+            "description" : "Unauthorized access"
+          },
+          "500" : {
+            "description" : "Internal server error"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "cities" ],
+        "summary" : "Add a new city.",
+        "description" : "Add new city. Only for authorized users.",
+        "operationId" : "addCity",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Object which contains data about new city.",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/City"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Success"
+          },
+          "404" : {
+            "description" : "Unauthorized access"
+          },
+          "500" : {
+            "description" : "Internal server error"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "cities" ],
+        "summary" : "Update an existing city.",
+        "description" : "Only for authorized users.",
+        "operationId" : "updateCity",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Id of city which should be updated.",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Object which contains new data for existing city.",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/City"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success"
+          },
+          "404" : {
+            "description" : "Unauthorized access"
+          }
+        }
+      }
+    },
+    "/api/v1/cities/{id}": {
+      "delete" : {
+        "tags" : [ "cities" ],
+        "summary" : "Delete city by id.",
+        "description" : "Delete city by provided id. Only for authorized users.",
+        "operationId" : "deleteCityById",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Id of city which should be removed.",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "message" : {
+                  "type" : "string",
+                  "example" : "city successfully deleted"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "City not found"
+          },
+          "404" : {
+            "description" : "Unauthorized access"
+          },
+          "500" : {
+            "description" : "Internal server error"
+          }
+        }
+      }
+    },
+    "/auth" : {
+      "post" : {
+        "tags" : [ "auth" ],
+        "summary" : "Authenticate with custom token.",
+        "description" : "Authenticate user by provided credentials using jwt token.",
+        "operationId" : "authWithToken",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "User data - password and username.",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/Auth"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "$ref" : "#/definitions/AuthSuccessResponse"
+            }
+          },
+          "404" : {
+            "description" : "User not Found",
+            "schema" : {
+              "$ref" : "#/definitions/AuthErrorResponse"
+            }
+          },
+          "500" : {
+            "description" : "Internal server error"
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "Product" : {
+      "type" : "object",
+      "required" : [ "id", "name", "price" ],
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "example" : "1"
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "Adidas"
+        },
+        "price" : {
+          "type" : "string",
+          "example" : "99"
+        },
+        "reviews" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Review"
+          }
+        }
+      },
+      "example" : {
+        "reviews" : [ {
+          "id" : "1.1",
+          "message" : "cool shirt!"
+        }, {
+          "id" : "1.1",
+          "message" : "cool shirt!"
+        } ],
+        "price" : "99",
+        "name" : "Adidas",
+        "id" : "1"
+      }
+    },
+    "Review" : {
+      "type" : "object",
+      "required" : [ "id", "message" ],
+      "properties" : {
+        "message" : {
+          "type" : "string",
+          "example" : "cool shirt!"
+        },
+        "id" : {
+          "type" : "string",
+          "example" : "1.1"
+        }
+      },
+      "example" : {
+        "id" : "1.1",
+        "message" : "cool shirt!"
+      }
+    },
+    "User" : {
+      "type" : "object",
+      "required" : [ "email", "id", "name", "password", "userName" ],
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "example" : "1"
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "Jim"
+        },
+        "userName" : {
+          "type" : "string",
+          "example" : "jim_morrison"
+        },
+        "email" : {
+          "type" : "string",
+          "format" : "email",
+          "example" : "lol@mail.com"
+        },
+        "password" : {
+          "type" : "string",
+          "example" : "111aaa222",
+          "minLength" : 7
+        }
+      },
+      "example" : {
+        "password" : "111aaa222",
+        "name" : "Jim",
+        "id" : "1",
+        "userName" : "jim_morrison",
+        "email" : "lol@mail.com"
+      }
+    },
+    "City" : {
+      "type" : "object",
+      "required" : [ "capital", "country", "id", "name" ],
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "example" : "2"
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "Brest"
+        },
+        "country" : {
+          "type" : "string",
+          "example" : "Belarus"
+        },
+        "capital" : {
+          "type" : "boolean",
+          "example" : false
+        },
+        "location" : {
+          "$ref" : "#/definitions/City_location"
+        }
+      },
+      "example" : {
+        "country" : "Belarus",
+        "capital" : false,
+        "name" : "Mohilev",
+        "location" : {
+          "lat" : 23,
+          "long" : 24
+        },
+        "id" : "5"
+      }
+    },
+    "Auth" : {
+      "type" : "object",
+      "required" : [ "password" ],
+      "properties" : {
+        "userName" : {
+          "type" : "string",
+          "example" : "jim_morrison"
+        },
+        "password" : {
+          "type" : "string",
+          "example" : "12345a"
+        }
+      },
+      "example" : {
+        "password" : "12345a",
+        "userName" : "jim_morrison"
+      }
+    },
+    "AuthSuccessResponse" : {
+      "type" : "object",
+      "properties" : {
+        "data" : {
+          "$ref" : "#/definitions/AuthSuccessResponse_data"
+        },
+        "token" : {
+          "type" : "string",
+          "example" : "507f191e810c19729de860ea"
+        }
+      },
+      "example" : {
+        "data" : {
+          "email" : "jim_morrison@mail.com",
+          "userName" : "jim_morrison"
+        },
+        "token" : "507f191e810c19729de860ea"
+      }
+    },
+    "AuthErrorResponse" : {
+      "type" : "object",
+      "properties" : {
+        "message" : {
+          "type" : "string",
+          "example" : "User with such credentials has not found!"
+        }
+      }
+    },
+    "inline_response_200" : {
+      "properties" : {
+        "message" : {
+          "type" : "string",
+          "example" : "User with id 1 was successfully removed"
+        }
+      },
+      "example" : {
+        "message" : "User with id 1 was successfully removed"
+      }
+    },
+    "inline_response_200_1" : {
+      "properties" : {
+        "message" : {
+          "type" : "string",
+          "example" : "city successfully deleted"
+        }
+      },
+      "example" : {
+        "message" : "city successfully deleted"
+      }
+    },
+    "City_location" : {
+      "properties" : {
+        "lat" : {
+          "type" : "integer",
+          "example" : 23
+        },
+        "long" : {
+          "type" : "integer",
+          "example" : 24
+        }
+      },
+      "example" : {
+        "lat" : 23,
+        "long" : 24
+      }
+    },
+    "AuthSuccessResponse_data" : {
+      "properties" : {
+        "email" : {
+          "type" : "string",
+          "example" : "jim_morrison"
+        },
+        "userName" : {
+          "type" : "string",
+          "example" : "jim_morrison"
+        }
+      },
+      "example" : {
+        "email" : "jim_23",
+        "userName" : "jim_morrison"
+      }
+    }
+  },
+  "externalDocs" : {
+    "description" : "Find out more about Swagger",
+    "url" : "http://swagger.io"
+  }
+}
